@@ -35,15 +35,7 @@ class TreeNode:
                 break
         return node
 
-    # def __iter__(self):
-    #     return self.children
-    #
-    # def __next__(self):
-    #     if self.index == len(self.children) - 1:
-    #         raise StopIteration
-    #     return self.children[self.index+1]
-
-
+    
 class SimplexTree:
     def __init__(self, simplexes=None):
         self.root = TreeNode(-1, float('-inf'), None)
@@ -100,7 +92,8 @@ class SimplexTree:
         # update filtration values of co_faces
         cofaces = self.get_cofaces(simplex)
         for x in cofaces:
-            x.filtration = filtration
+            if x.filtration < filtration: 
+                x.filtration = filtration
 
     def node2simplex(self, node):
         simplex = []

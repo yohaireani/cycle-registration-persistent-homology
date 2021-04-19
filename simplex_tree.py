@@ -168,7 +168,7 @@ class SimplexTree:
                 simplex_list.append((simplex[:], filtration))
         return simplex_list
 
-    def persistent_homology_in_dimension(self, dim):
+    def persistent_homology_in_dimension(self, dim, canonical=0):
         if dim > self.dimension:
             return []
         b = self.simplex_dict[dim + 1] # (k+1)-simplexes
@@ -198,7 +198,7 @@ class SimplexTree:
             boundary.sort()
             boundary_matrix.add_col(boundary, x.filtration)
 
-        intervals, generators, neg2pos_dict, pos2idx = boundary_matrix.get_intervals()
+        intervals, generators, neg2pos_dict, pos2idx = boundary_matrix.get_intervals(canonical)
         new_generators = []
         for g in generators:
             new_generator = []

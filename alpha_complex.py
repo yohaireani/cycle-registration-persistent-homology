@@ -83,10 +83,10 @@ class AlphaComplex:
                         cnt += 1
 
 
-    def persistent_homology_in_dimension(self, dim):
+    def persistent_homology_in_dimension(self, dim, canonical=0):
         '''
         :param dim: homology dimension to be calculated
         :return: persistent homology intervals, generators and simplexes pairings
         '''
-        intervals, generators, neg2pos_dict, pos2idx = self.ST.persistent_homology_in_dimension(dim)
+        intervals, generators, neg2pos_dict, pos2idx = self.ST.persistent_homology_in_dimension(dim, canonical)
         return intervals, generators, neg2pos_dict, pos2idx

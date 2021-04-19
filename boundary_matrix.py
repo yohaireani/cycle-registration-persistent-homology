@@ -164,9 +164,12 @@ class BoundaryMatrix:
         self.reduce()
         self.make_canonical()
 
-    def get_intervals(self):
+    def get_intervals(self, canonical=0):
         if not self.reduced:
-            self.reduce_canonical()
+            if canonical != 0:
+                self.reduce_canonical()
+            else:
+                self.reduce()
             for x in self.gen_indices:
                 self.generators.append(self.cols[x].simplex[:])
         return self.intervals, self.generators, self.neg2pos_dict, self.pos2idx

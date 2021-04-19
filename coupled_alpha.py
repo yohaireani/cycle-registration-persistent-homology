@@ -182,7 +182,7 @@ class CoupledAlpha:
                         cnt += 1
 
 
-    def persistent_homology_in_dimension(self, dim, image_flag=-1):
+    def persistent_homology_in_dimension(self, dim, image_flag=-1, canonical=0):
         '''
         :param dim: dimension of persistent homology
         :param image_flag: if 0 computes the image homology for X if 1 for Y
@@ -201,7 +201,7 @@ class CoupledAlpha:
                 s[0].filtration = float('inf')
 
         # computing image homology
-        intervals, generators, neg2pos_dict, pos2idx = self.ST.persistent_homology_in_dimension(dim)
+        intervals, generators, neg2pos_dict, pos2idx = self.ST.persistent_homology_in_dimension(dim, canonical)
 
         # reversing the infinite filtration values to the original values
         if image_flag == 0: # image homology of X

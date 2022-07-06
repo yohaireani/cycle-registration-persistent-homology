@@ -38,6 +38,38 @@ def gentorus(params):
     return X
 
 
+def genclusters(params):
+    N, numClusters, cycleRadius, clusterRadius, p = params
+    dTheta = 2*np.pi/numClusters
+    X = np.zeros((N, 2))
+    clusterPointsIdx = np.random.rand(N)
+
+    clusterIdx = np.random.randint(N, size=N)
+    clusterX = [cycleRadius * np.cos(clusterIdx[i] * dTheta) for i in range(len(clusterIdx))]
+    clusterY = [cycleRadius * np.sin(clusterIdx[i] * dTheta) for i in range(len(clusterIdx))]
+    clusterX = [clusterX[i] + clusterRadius * np.random.randn(1) for i in range(len(clusterX))]
+    clusterY = [clusterY[i] + clusterRadius * np.random.randn(1) for i in range(len(clusterY))]
+    for i in range(N):
+        if clusterPointsIdx[i] >= p:
+            X[i, :] = [clusterX[i], clusterY[i]]
+        else:
+            X[i, :] = [np.random.rand(1) - 0.5, np.random.rand(1) - 0.5]
+    return X
+
+def resample_gauss(X1, bw):
+    numPoints = X1.shape[0]
+    X2 = np.zeros(shape=X1.shape)
+    pointsIdx = np.random.randint(numPoints, size=numPoints)
+    if X1.shape[1] == 2:
+        for i in range(numPoints):
+            X2[i, :] = [X1[pointsIdx[i], 0] + bw * np.random.randn(1), X1[pointsIdx[i], 1] + bw * np.random.randn(1)]
+    elif X1.shape[1] == 3:
+        for i in range(numPoints):
+            X2[i, :] = [X1[pointsIdx[i], 0] + bw * np.random.randn(1), X1[pointsIdx[i], 1] + bw * np.random.randn(1), X1[pointsIdx[i], 2] + bw * np.random.randn(1)]
+    return X2
+
+
+# plotting functions
 def plot_complex3D(X, simplex_tree, r=float('inf')):
 
     simplex_dict = simplex_tree.simplex_dict
